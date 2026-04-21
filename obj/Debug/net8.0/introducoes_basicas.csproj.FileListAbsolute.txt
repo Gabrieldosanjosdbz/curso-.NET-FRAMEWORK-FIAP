@@ -1,0 +1,14 @@
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/bin/Debug/net8.0/introducoes_basicas
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/bin/Debug/net8.0/introducoes_basicas.deps.json
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/bin/Debug/net8.0/introducoes_basicas.runtimeconfig.json
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/bin/Debug/net8.0/introducoes_basicas.dll
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/bin/Debug/net8.0/introducoes_basicas.pdb
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/obj/Debug/net8.0/introducoes_basicas.GeneratedMSBuildEditorConfig.editorconfig
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/obj/Debug/net8.0/introducoes_basicas.AssemblyInfoInputs.cache
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/obj/Debug/net8.0/introducoes_basicas.AssemblyInfo.cs
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/obj/Debug/net8.0/introducoes_basicas.csproj.CoreCompileInputs.cache
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/obj/Debug/net8.0/introducoes_basicas.dll
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/obj/Debug/net8.0/refint/introducoes_basicas.dll
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/obj/Debug/net8.0/introducoes_basicas.pdb
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/obj/Debug/net8.0/introducoes_basicas.genruntimeconfig.cache
+/home/gabriel/cursos/fiap/C#-.NET/introducoes_basicas/obj/Debug/net8.0/ref/introducoes_basicas.dll
