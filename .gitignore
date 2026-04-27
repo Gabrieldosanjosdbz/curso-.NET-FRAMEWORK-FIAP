@@ -1,0 +1,88 @@
+# =========================
+# Build / Output
+# =========================
+bin/
+obj/
+out/
+publish/
+
+# =========================
+# User-specific files
+# =========================
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# =========================
+# Visual Studio
+# =========================
+.vs/
+
+# =========================
+# VS Code
+# =========================
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+
+# =========================
+# Rider / JetBrains
+# =========================
+.idea/
+*.sln.iml
+
+# =========================
+# Logs
+# =========================
+*.log
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# Environment / Secrets
+# =========================
+appsettings.Development.json
+appsettings.*.json
+
+# (opcional: manter apenas o padrão)
+!appsettings.json
+
+# =========================
+# Entity Framework
+# =========================
+Migrations/
+
+# =========================
+# Node (se tiver frontend)
+# =========================
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# =========================
+# Test Results
+# =========================
+TestResults/
+coverage/
+
+# =========================
+# Publish profiles
+# =========================
+Properties/PublishProfiles/
+
+# =========================
+# Docker
+# =========================
+docker-compose.override.yml
+
+# =========================
+# Temporary files
+# =========================
+*.tmp
+*.temp
