@@ -1,9 +1,53 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
+  <!--
+    .csproj é o arquivo de projeto do .NET. Aqui declaramos:
+      - O SDK usado (Microsoft.NET.Sdk.Web -> projeto web ASP.NET Core)
+      - O TargetFramework (versão do .NET)
+      - Os pacotes NuGet (dependências externas)
+    O equivalente em outras linguagens: package.json (Node), pom.xml (Java/Maven).
+  -->
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <!-- Nullable: habilita análise de tipos anuláveis (string? vs string). Boa prática moderna. -->
     <Nullable>enable</Nullable>
+    <!-- ImplicitUsings: o compilador injeta usings comuns automaticamente (System, System.Linq, etc.). -->
     <ImplicitUsings>enable</ImplicitUsings>
+    <!-- Necessário para o Swagger gerar documentação a partir dos comentários XML dos controllers. -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Suprime warnings de membros sem comentários XML (não queremos poluir o output). -->
+    <NoWarn>$(NoWarn);1591</NoWarn>
   </PropertyGroup>
+
+  <ItemGroup>
+    <!--
+      Entity Framework Core: o ORM oficial da Microsoft.
+      Mapeia classes C# para tabelas do banco e gera SQL automaticamente.
+    -->
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+
+    <!--
+      Provider do EF Core para PostgreSQL.
+      Já traz o Npgsql como dependência (driver ADO.NET nativo).
+    -->
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="8.0.10" />
+
+    <!--
+      Npgsql: driver ADO.NET puro para PostgreSQL.
+      Usaremos diretamente para mostrar o ADO.NET "cru", sem ORM.
+    -->
+    <PackageReference Include="Npgsql" Version="8.0.5" />
+
+    <!--
+      Swashbuckle: gera a UI do Swagger/OpenAPI para a nossa API REST.
+      Permite testar os endpoints pelo navegador em /swagger.
+    -->
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.7.3" />
+  </ItemGroup>
 
 </Project>

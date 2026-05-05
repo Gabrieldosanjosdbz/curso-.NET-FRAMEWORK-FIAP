@@ -1,0 +1,66 @@
+@*
+    Esta view não tem @model — usaremos ViewBag (típico para dados ad-hoc).
+    Em projetos maiores, prefira criar uma classe RelatorioViewModel e usar @model.
+*@
+@using MeuProjetoMVC.Data
+@using MeuProjetoMVC.Models
+
+@{
+    ViewData["Title"] = "Relatórios (ADO.NET)";
+    var resumo        = ViewBag.Resumo        as RelatorioEstoque ?? new RelatorioEstoque();
+    var produtosBaixo = ViewBag.ProdutosBaixo as List<Produto>     ?? new();
+    int limite        = (int)ViewBag.LimiteEstoque;
+}
+
+<h1>Relatórios — via ADO.NET puro</h1>
+<p class="text-muted">
+    Esta página usa Npgsql diretamente (SQL puro), sem o EF Core.
+    Veja <code>Data/AdoNetProdutoRepository.cs</code>.
+</p>
+
+<h3>Resumo</h3>
+<div class="row">
+    <div class="col-md-3"><div class="card p-3"><strong>Total de produtos</strong><br>@resumo.TotalProdutos</div></div>
+    <div class="col-md-3"><div class="card p-3"><strong>Soma do estoque</strong><br>@resumo.SomaEstoque</div></div>
+    <div class="col-md-3"><div class="card p-3"><strong>Valor em estoque</strong><br>@resumo.ValorTotal.ToString("C")</div></div>
+    <div class="col-md-3"><div class="card p-3"><strong>Preço médio</strong><br>@resumo.PrecoMedio.ToString("C")</div></div>
+</div>
+
+<hr />
+
+<h3>Produtos com estoque abaixo de @limite</h3>
+
+@*
+    Form via método GET (querystring) — ?limiteEstoque=10 chega direto no parâmetro
+    da action Index do controller via model binding.
+*@
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input type="number" name="limiteEstoque" value="@limite" class="form-control" min="0" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Aplicar</button>
+    </div>
+</form>
+
+@if (!produtosBaixo.Any())
+{
+    <div class="alert alert-success">Nenhum produto abaixo desse limite. 🎉</div>
+}
+else
+{
+    <table class="table table-sm">
+        <thead><tr><th>#</th><th>Nome</th><th>Preço</th><th>Estoque</th></tr></thead>
+        <tbody>
+        @foreach (var p in produtosBaixo)
+        {
+            <tr>
+                <td>@p.Id</td>
+                <td>@p.Nome</td>
+                <td>@p.Preco.ToString("C")</td>
+                <td><span class="badge bg-warning text-dark">@p.Estoque</span></td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

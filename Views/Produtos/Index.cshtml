@@ -1,0 +1,53 @@
+@*
+    A diretiva @model declara qual é o "Modelo" desta view.
+    Aqui é uma lista de Produtos. Sem isso, "Model" seria dynamic (sem IntelliSense).
+*@
+@model IEnumerable<MeuProjetoMVC.Models.Produto>
+
+@{
+    ViewData["Title"] = "Produtos";
+}
+
+<h1>Produtos</h1>
+
+<p>
+    @* asp-action gera URL para a action Create deste mesmo controller. *@
+    <a class="btn btn-primary" asp-action="Create">+ Novo produto</a>
+</p>
+
+@if (!Model.Any())
+{
+    <div class="alert alert-info">Nenhum produto cadastrado ainda.</div>
+}
+else
+{
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                @* DisplayNameFor lê os [Display(Name="...")] do Model. *@
+                <th>@Html.DisplayNameFor(m => m.First().Nome)</th>
+                <th>@Html.DisplayNameFor(m => m.First().Preco)</th>
+                <th>@Html.DisplayNameFor(m => m.First().Estoque)</th>
+                <th>@Html.DisplayNameFor(m => m.First().CriadoEm)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var p in Model)
+        {
+            <tr>
+                <td>@p.Nome</td>
+                @* Formatação inline com C# — :C aplica a cultura de moeda. *@
+                <td>@p.Preco.ToString("C")</td>
+                <td>@p.Estoque</td>
+                <td>@p.CriadoEm.ToLocalTime().ToString("dd/MM/yyyy HH:mm")</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@p.Id" class="btn btn-sm btn-outline-secondary">Detalhes</a>
+                    <a asp-action="Edit"    asp-route-id="@p.Id" class="btn btn-sm btn-outline-primary">Editar</a>
+                    <a asp-action="Delete"  asp-route-id="@p.Id" class="btn btn-sm btn-outline-danger">Excluir</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}

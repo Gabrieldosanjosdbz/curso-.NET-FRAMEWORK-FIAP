@@ -1,0 +1,61 @@
+# =============================================================================
+# docker-compose.yml — orquestra DOIS serviços:
+#   1) db  -> PostgreSQL 16
+#   2) app -> nossa aplicação ASP.NET (Dockerfile acima)
+#
+# Para subir tudo:
+#   docker compose up --build
+# Para parar:
+#   docker compose down
+# Para resetar o banco (apaga o volume):
+#   docker compose down -v
+# =============================================================================
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: meuprojeto-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: meuprojeto
+    ports:
+      # Mapeia 5432 do container para 5433 da MÁQUINA — usamos 5433 porque
+      # você já tem um Postgres local ocupando 5432.
+      # Para conectar do host (DBeaver/psql): localhost:5433.
+      # Dentro do compose, o app continua usando "db:5432" (rede interna).
+      - "5433:5432"
+    volumes:
+      # Volume nomeado: persiste os dados entre reinícios do container.
+      - pgdata:/var/lib/postgresql/data
+      # Scripts em /docker-entrypoint-initdb.d/ rodam UMA VEZ na primeira
+      # inicialização do banco (quando o volume está vazio).
+      - ./db/init.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+    healthcheck:
+      # O healthcheck garante que o app só inicie quando o banco já estiver pronto.
+      test: ["CMD-SHELL", "pg_isready -U postgres -d meuprojeto"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # network: host durante o BUILD evita problemas de DNS/IPv6 ao baixar pacotes
+      # NuGet de dentro do container. Não afeta como o container roda depois.
+      network: host
+    container_name: meuprojeto-app
+    environment:
+      ASPNETCORE_ENVIRONMENT: Docker
+      # Sobrescreve a connection string do appsettings — o nome "db" é o nome
+      # do serviço acima, que vira hostname dentro da rede do compose.
+      ConnectionStrings__DefaultConnection: "Host=db;Port=5432;Database=meuprojeto;Username=postgres;Password=postgres"
+    ports:
+      - "8080:8080"
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

@@ -1,0 +1,12 @@
+# Arquivos que não devem ir para o contexto do Docker (deixa builds mais rápidos).
+bin/
+obj/
+.vs/
+.vscode/
+.idea/
+*.user
+**/.git
+**/.gitignore
+**/.DS_Store
+**/Thumbs.db
+README.md

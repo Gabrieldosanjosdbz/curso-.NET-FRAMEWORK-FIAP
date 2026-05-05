@@ -1,5 +1,17 @@
-﻿<!DOCTYPE html>
-<html lang="en">
+@*
+    _Layout.cshtml — LAYOUT MASTER da aplicação MVC.
+
+    Toda View que não defina um Layout próprio (e o _ViewStart.cshtml escolhe
+    "_Layout" por padrão) é renderizada DENTRO desse arquivo, no @RenderBody().
+
+    Conceitos da página:
+      - @ViewData["Title"]      acesso a dados que a view definiu.
+      - asp-controller/asp-action  Tag Helpers que geram URLs respeitando as rotas.
+      - @RenderBody()           onde o conteúdo da view específica é injetado.
+      - @RenderSectionAsync()   permite a view injetar HTML em pontos nomeados (ex: Scripts).
+*@
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -20,10 +32,20 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-controller="Produtos" asp-action="Index">Produtos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Relatorios" asp-action="Index">Relatórios (ADO.NET)</a>
+                        </li>
+                        <li class="nav-item">
+                            @* Link direto para Swagger UI da nossa API REST *@
+                            <a class="nav-link text-dark" href="/swagger" target="_blank">API (Swagger)</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
                 </div>
@@ -38,12 +60,17 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2026 - MeuProjetoMVC - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2026 - MeuProjetoMVC - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @*
+        Seção opcional "Scripts" — a view pode injetar JS específico (ex: validação)
+        usando @section Scripts { ... }. required:false torna a seção opcional.
+    *@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
